@@ -75,5 +75,7 @@ function blink(success = false, blinkTime = 2) {
     if (container.classList.contains('success') || container.classList.contains('wrong')) container.classList.remove(['success', 'wrong']);
 
     container.classList.add(classOfPrestige);
-    if (blinkTime > 0) const classTimeout = setTimeout(() => container.classList.remove(classOfPrestige), ((2 * ANIMATION_DURATION) * blinkTime));
+    if (blinkTime > 0) {
+        const classTimeout = setTimeout(() => container.classList.remove(classOfPrestige), ((2 * ANIMATION_DURATION) * blinkTime));
+    }
 }
