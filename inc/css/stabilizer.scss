@@ -7,8 +7,8 @@
     
     // On passe directement à une fonction mathématique pour que le texte réduise tout seul !
     // Plus besoin de Media Queries compliquées pour les polices.
-    --text-sizing: clamp(0.6rem, 2.5vw, 1rem);
-    --stabilizer-size: clamp(0.8rem, 3vw, 1.5rem);
+    --stabilizer-size: clamp(1.5rem, 5vw, 2.5rem); 
+    --text-sizing: clamp(0.8rem, 3vw, 1.2rem);
 }
 
 html, body {
@@ -149,9 +149,15 @@ body.d-flex {
     display: flex;
     align-items: center;
     background-color: #151816; 
-    border: .3rem solid #222;
     
-    width: 25%;
+    // CORRECTION 1 : Bordure en pixels fixes. 
+    // Comme ça, elle ne grossira jamais au point d'écraser le texte
+    border: 2px solid #222;
+    
+    // CORRECTION 2 : Largeur élastique ! 
+    // Au minimum 150px sur téléphone, autour de 40% sur tablette, et 300px max sur PC.
+    width: clamp(150px, 40%, 300px); 
+    
     height: var(--stabilizer-size);
     text-transform: uppercase;
     z-index: 999;

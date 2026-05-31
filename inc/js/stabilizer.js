@@ -19,6 +19,7 @@ function lockBtns(keepCenter = false) {
     const size = currentGridSize();
 
     if (keepCenter) {
+        // Coordonnées du centre pour une grille 4x4
         const keepUnlockedAreas = [
             [1, 1],
             [1, 2],
@@ -37,8 +38,7 @@ function lockBtns(keepCenter = false) {
                 el.classList.toggle('disabled');
             }
         });
-    }
-    else {
+    } else {
         btnContainers.forEach(el => {
             el.classList.toggle('disabled');
         });
@@ -48,22 +48,23 @@ function lockBtns(keepCenter = false) {
 function showTextInHintBox(text = []) {
     const container = document.querySelector('#hint-screen');
     
-    if (!text) return;
+    // Sécurité : On s'assure que text est bien un tableau et qu'il n'est pas vide
+    if (!Array.isArray(text) || text.length === 0) return;
 
-    if (typeof text === 'object' && text != []) {
-
-        text.forEach(className => {
-            const el = document.createElement('span', {classList: className});
-            el.innerText = className;
-
-            container.append(el);
-        });
-
+    text.forEach(className => {
         const el = document.createElement('span');
-        el.innerHTML = '    ';
-        for (let index = 0; index < 2; index++) {
-            container.append(el);
-        }
+        el.classList.add(className); // CORRECTION : La bonne méthode pour ajouter une classe en Vanilla JS
+        el.innerText = className;
+
+        container.append(el);
+    });
+
+    // Ajout des espaces
+    const elSpace = document.createElement('span');
+    elSpace.innerHTML = '    ';
+    for (let index = 0; index < 2; index++) {
+        // On clone le noeud pour pouvoir l'ajouter plusieurs fois proprement
+        container.append(elSpace.cloneNode(true));
     }
 }
 
@@ -72,10 +73,16 @@ function blink(success = false, blinkTime = 2) {
     const container = document.querySelector('.container');
     const ANIMATION_DURATION = 300;
 
-    if (container.classList.contains('success') || container.classList.contains('wrong')) container.classList.remove(['success', 'wrong']);
+    // CORRECTION : On retire les classes séparément, sans tableau
+    if (container.classList.contains('success') || container.classList.contains('wrong')) {
+        container.classList.remove('success', 'wrong');
+    }
 
     container.classList.add(classOfPrestige);
+    
     if (blinkTime > 0) {
-        const classTimeout = setTimeout(() => container.classList.remove(classOfPrestige), ((2 * ANIMATION_DURATION) * blinkTime));
+        setTimeout(() => {
+            container.classList.remove(classOfPrestige);
+        }, (2 * ANIMATION_DURATION) * blinkTime);
     }
 }
