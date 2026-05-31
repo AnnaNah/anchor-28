@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. On ignore la règle si le chemin correspond à un vrai fichier (ex: tes .css, .js, images)
+RewriteCond %{REQUEST_FILENAME} !-f
+# 2. On ignore la règle si ça correspond à un vrai dossier
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 3. La règle magique : on capture tout ce qui n'est pas un slash
+RewriteRule ^([^/]+)/?$ /index.php?module=$1 [QSA,L]

@@ -1,0 +1,75 @@
+{
+    "terminal": {
+        "safe_mode": [
+            "<span class=\"highlight\">MANUEL : TERMINAL DE L'ANCRE</span>",
+            "--------------------------------------------------",
+            "Statut actuel : SAFE_MODE (Fonctionnalités réduites).",
+            "Diagnostic    : Le noyau système est verrouillé par un protocole de sécurité.",
+            "Aide          : Élevez vos privilèges d'accès pour débrider le terminal.",
+            "Commande      : GETLVL [clé_sécurité]",
+            "Indice        : Une clé d'accréditation est mentionnée dans les LOGBOOK."
+        ],
+        "restricted": [
+            "<span class=\"highlight\">MANUEL : TERMINAL DE L'ANCRE</span>",
+            "--------------------------------------------------",
+            "Statut actuel : RESTRICTED (Accès partiel).",
+            "Diagnostic    : Privilèges de niveau 2 accordés. Noyau semi-actif.",
+            "Aide          : Le terminal attend la synchronisation des autres modules.",
+            "Action        : Allez réparer le GENERATOR et le STABILIZER."
+        ]
+    },
+    "stabilizer": {
+        "safe_mode": [
+            "<span class=\"highlight\">MANUEL : STABILISATEUR GYROSCOPIQUE</span>",
+            "--------------------------------------------------",
+            "Statut actuel : SAFE_MODE (Régulation passive).",
+            "Diagnostic    : Les capteurs d'assiette magnétique sont désalignés.",
+            "Aide          : Réalignez la télémétrie pour stabiliser la carcasse du vaisseau.",
+            "Commande      : REDIRECT FLUX_NORD STAB_CORE"
+        ],
+        "restricted": [
+            "<span class=\"highlight\">MANUEL : STABILISATEUR GYROSCOPIQUE</span>",
+            "--------------------------------------------------",
+            "Statut actuel : RESTRICTED (Asservissement manuel actif).",
+            "Diagnostic    : Les gyroscopes oscillent mais manquent de puissance brute.",
+            "Aide          : Le stabilisateur a besoin d'un apport énergétique majeur.",
+            "Action        : Reroutez l'énergie depuis le GENERATOR ou le MANUAL_REROUTER."
+        ]
+    },
+    "manual_rerouter": {
+        "safe_mode": [
+            "<span class=\"highlight\">MANUEL : ROUTEUR DE FLUX MANUEL</span>",
+            "--------------------------------------------------",
+            "Statut actuel : SAFE_MODE (Routage automatique bloqué).",
+            "Diagnostic    : Les connexions physiques vers l'antenne externe sont coupées.",
+            "Aide          : Utilisez les commandes réseau pour forcer la redirection du signal.",
+            "Commande      : REDIRECT [source] [destination]"
+        ],
+        "restricted": [
+            "<span class=\"highlight\">MANUEL : ROUTEUR DE FLUX MANUEL</span>",
+            "--------------------------------------------------",
+            "Statut actuel : RESTRICTED (Ponts de données instables).",
+            "Diagnostic    : Le signal est redirigé mais le pare-feu du sous-système bloque le flux.",
+            "Aide          : Injectez un script de contournement ou validez les ports ouverts.",
+            "Action        : Utilisez une clé d'accès réseau via la commande GETLVL."
+        ]
+    },
+    "generator": {
+        "safe_mode": [
+            "<span class=\"highlight\">MANUEL : GÉNÉRATEUR PRINCIPAL</span>",
+            "--------------------------------------------------",
+            "Statut actuel : SAFE_MODE (Énergie de secours uniquement).",
+            "Diagnostic    : La bobine thermique est fracturée suite au crash.",
+            "Aide          : Fusionnez les composants nécessaires pour réparer le noyau.",
+            "Commande      : COMBINE [composant_1] [composant_2]"
+        ],
+        "restricted": [
+            "<span class=\"highlight\">MANUEL : GÉNÉRATEUR PRINCIPAL</span>",
+            "--------------------------------------------------",
+            "Statut actuel : RESTRICTED (En attente de charge).",
+            "Diagnostic    : La bobine est réparée. Flux thermique stable.",
+            "Aide          : Le routeur manuel doit injecter le courant vers le réseau global.",
+            "Action        : Utilisez la commande REDIRECT depuis le MANUAL_REROUTER."
+        ]
+    }
+}

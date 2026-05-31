@@ -1,0 +1,53 @@
+@use '../scss/common';
+
+:root {
+    font-family: "Fira Code", monospace;
+}
+
+html,
+body {
+    background-color: #0c0c0c;
+    color: #fff;
+    user-select: none;
+}
+
+input {
+
+    &[type="text"] {
+        background: transparent;
+        border: 0;
+        outline: 0;
+        color: inherit;
+        padding: 0;
+    }
+}
+
+span {
+
+    &.alert {
+        color: #f72948;
+    }
+
+    &.warn {
+        color: #df9534;
+    }
+
+    &.valid {
+        color: #34cd5f;
+    }
+
+    &.highlight {
+        color: #3e7cfa;
+    }
+
+    &.lowlight {
+        color: #777777;
+    }
+}
+
+#screen {
+
+    &>* {
+        white-space: pre-wrap;
+    }
+}

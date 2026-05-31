@@ -1,0 +1,75 @@
+@each $value in ('min-', '', 'max-') {
+    .#{$value}screen-sized {
+        #{$value}width: 100vw;
+        #{$value}height: 100vh;
+        
+        &-x {
+            #{$value}width: 100vw !important;
+        }
+        
+        &-y {
+            #{$value}height: 100vh !important;
+        }
+    }
+}
+
+@each $value in (flex, inline-flex, block, inline, inline-block, none, grid) {
+    .d-#{$value} {
+        display: $value;
+    }
+}
+
+@each $class, $value in ('s' flex-start, 'e' flex-end, 'c' center, 'sa' space-around, 'sb' space-between) {
+    .jc#{$class} {
+        justify-content: $value !important;
+    }
+    
+    .ai#{$class} {
+        align-items: $value !important;
+    }
+}
+
+@each $value in (column, row, column-reverse, row-reverse) {
+    .flex-#{$value} {
+        flex-direction: $value !important;
+    }
+}
+
+@each $value in ('grow', 'shrink') {
+    @for $i from 1 through 5 {
+        .flex-#{$value}-#{$i} {
+            flex-#{$value}: $i !important;
+        }
+    }
+}
+
+@for $i from 0 through 4 {
+    $pourcent: calc($i * 25);
+    
+    @each $class, $value in ('h' 'height', 'w' 'width') {
+        .#{$class}-#{$pourcent} {
+            #{$value} : calc($pourcent * 1%) !important;
+        }
+    }
+}
+
+@for $i from 1 through 20 {
+    $size: calc($i * 0.25rem);
+    
+    @each $class, $attribute in ('' '', 'row-' 'row-', 'col-' 'column-') {
+        
+        .gap-#{$class}#{$i} {
+            #{$attribute}gap: $size !important;
+        }
+    }
+
+    @each $class1, $attribute1 in ('p' 'padding', 'm' 'margin') {
+
+        @each $class2, $attribute2 in ('' '', 'x' '-inline', 'y' '-block', 's' '-left', 'e' '-right', 't' '-top', 'b' '-bottom') {
+
+            .#{$class1}#{$class2}-#{$i} {
+                #{$attribute1}#{$attribute2}: $size !important;
+            }
+        }
+    }
+}

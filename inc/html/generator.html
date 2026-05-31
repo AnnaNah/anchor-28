@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="generator-module">
+        
+        <div class="panel-left">
+            <div class="lcd-screen">
+                <div class="scanlines"></div>
+                <div id="calc-expression">-- x --</div>
+                <div id="calc-input">_</div>
+            </div>
+
+            <div class="keypad">
+                <button class="key" onclick="pressKey('1')">1</button>
+                <button class="key" onclick="pressKey('2')">2</button>
+                <button class="key" onclick="pressKey('3')">3</button>
+                <button class="key" onclick="pressKey('4')">4</button>
+                <button class="key" onclick="pressKey('5')">5</button>
+                <button class="key" onclick="pressKey('6')">6</button>
+                <button class="key" onclick="pressKey('7')">7</button>
+                <button class="key" onclick="pressKey('8')">8</button>
+                <button class="key" onclick="pressKey('9')">9</button>
+                <button class="key btn-clear" onclick="pressKey('C')">CLR</button>
+                <button class="key" onclick="pressKey('0')">0</button>
+                <button class="key btn-enter" onclick="pressKey('E')">ENT</button>
+            </div>
+        </div>
+
+        <div class="panel-right">
+            
+            <div class="gauge-container">
+                <svg viewBox="0 0 200 110" class="gauge-svg">
+                    <defs>
+                        <linearGradient id="gauge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ff002b" />
+                            <stop offset="50%" stop-color="#ffe600" />
+                            <stop offset="100%" stop-color="#39ff14" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 20,100 A 80,80 0 0,1 180,100" fill="none" stroke="#222" stroke-width="16" stroke-linecap="round"/>
+                    <path d="M 20,100 A 80,80 0 0,1 180,100" fill="none" stroke="url(#gauge-grad)" stroke-width="12" stroke-linecap="round"/>
+                </svg>
+                
+                <div class="needle" id="gauge-needle"></div>
+                <div class="hub"></div>
+            </div>
+
+            <div class="crank-container">
+                <div class="crank-wheel" id="crank-wheel">
+                    <div class="crank-handle"></div>
+                </div>
+                <p class="crank-label">MANUAL CHARGE</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <!-- <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div> -->
+    </div>
+</div>

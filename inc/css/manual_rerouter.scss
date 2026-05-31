@@ -1,0 +1,138 @@
+@use '../scss/common';
+
+$allPadSize: var(--stabilizer-size);
+$inputSize: var(--input-size);
+
+:root {
+    --stabilizer-size: 1.5rem;
+    --input-size: 6rem;
+    --cable-thickness: 1.5em;
+    
+    @media screen and (max-width: 1140px) {
+        --input-size: 4rem;
+        --cable-thickness: 1em;
+    }
+    
+    @media screen and (max-width: 620px) {
+        --stabilizer-size: 0.75rem;
+        --input-size: 2rem;
+        --cable-thickness: .5em;
+    }
+}
+
+html,
+body {
+    background-color: #2b2e33;
+    
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.45) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.03) 75%, transparent 75%, transparent);
+    
+    background-size: 120px 120px, 120px 120px, 120px 120px;
+    
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.85);
+}
+
+.container {
+    background-color: #181a1d;
+    border: calc($allPadSize / 2) solid #53575e;
+    
+    position: relative;
+    
+    width: 100vw;
+    max-width: 100vh;
+    height: 100vh;
+    max-height: 100vw;
+    aspect-ratio: 1 / 1;
+    
+    padding: $allPadSize;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+    flex-wrap: wrap;
+    
+    box-shadow: inset 0 0 $allPadSize #fff5;
+    
+    &.locked {
+        user-select: none;
+        pointer-events: none;
+    }
+}
+
+$terminal-colors: (
+1 #ff6a00 #ffffff,
+2 #39ff14 #3b71f7,
+3 #00d2ff #b5c93b,
+4 #ff3737 #ea49ff,
+5 #ffe600 #d30539,
+6 #9300c9 #00bfa0,
+7 #00f5ec #ffd000,
+8 #ff0099 #73797c,
+);
+
+.input,
+.output {
+    
+    &>* {
+        width: $inputSize;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 9999rem;
+        border: calc($inputSize / 4) solid;
+        background-color: #000;
+    }
+}
+
+@each $int, $color1, $color2 in $terminal-colors {
+    
+    .input {
+        
+        &>* {
+            
+            &:nth-child(#{$int}) {
+                border-color: $color1;
+            }
+        }
+    }
+    
+    .output {
+        
+        &>* {
+            
+            &:nth-child(#{$int}) {
+                border-color: $color2;
+            }
+        }
+    }
+}
+
+/* On cible toutes les lignes qui apparaissent dans ton calque SVG */
+#cable-svg line {
+    /* 1. Extrémités parfaitement arrondies (fini les bords carrés pixélisés !) */
+    stroke-linecap: round;
+    
+    /* 2. Épaisseur par défaut (modifiable via une variable CSS !) */
+    stroke-width: var(--cable-thickness, 8px);
+    
+    /* Optionnel : Une petite transition fluide si la couleur change */
+    transition: stroke 0.25s ease;
+    
+    /* La classe qui déclenche le rembobinage */
+    &.rewinding {
+        /* Un plein de 1000px, UN VIDE DE 2000px (interdit au câble de revenir !) */
+        stroke-dasharray: 1000 2000;
+        stroke-dashoffset: 0;
+        
+        animation: rewindCable 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+}
+
+@keyframes rewindCable {
+    to {
+        stroke-dashoffset: 1000;
+        opacity: 0; /* On force l'opacité à 0 à la fin */
+    }
+}

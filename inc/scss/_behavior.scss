@@ -1,0 +1,13 @@
+@each $class in ('', '-x', '-y') {
+    @each $value in (auto, hidden, scroll, visible) {
+        .overflow#{$class}-#{$value} {
+            overflow#{$class}: $value !important;
+        }
+    }
+}
+
+@each $value in (auto, thin, none) {
+    .scrollbar-#{$value} {
+        scrollbar-width: $value !important;
+    }
+}

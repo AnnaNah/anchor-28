@@ -1,0 +1,92 @@
+{
+    "technicals": {
+        "has_hierarchy": true,
+        "name": "technicals",
+        "content": {
+            "r_motors": {
+                "name": "r_motors",
+                "status": "disconnected"
+            },
+            "l_motors": {
+                "name": "l_motors",
+                "status": "damaged"
+            },
+            "hyperdrive_boosters": {
+                "name": "hyperdrive_boosters",
+                "status": "crit_damaged"
+            },
+            "takeoff_propulsors": {
+                "name": "takeoff_propulsors",
+                "status": "disconnected"
+            }
+        }
+    },
+    "modules": {
+        "has_hierarchy": true,
+        "name": "modules",
+        "content": {
+            "hyperdrive": {
+                "name": "hyperdrive",
+                "status": "crit_damaged"
+            },
+            "navigation_ia": {
+                "name": "navigation_ia",
+                "status": "offline"
+            },
+            "env_variables": {
+                "name": "env_variables",
+                "status": "connected"
+            },
+            "auto_routing": {
+                "name": "auto_routing",
+                "status": "disconnected"
+            },
+            "autopilot": {
+                "name": "autopilot",
+                "status": "damaged"
+            },
+            "plankoscopic_link_antena": {
+                "name": "plankoscopic_link_antena",
+                "status": "connected"
+            }
+        }
+    },
+    "rooms": {
+        "has_hierarchy": true,
+        "name": "rooms",
+        "content": {
+            "canteen": {
+                "name": "canteen",
+                "status": "disconnected"
+            },
+            "cargo_bay": {
+                "name": "cargo_bay",
+                "status": "disconnected"
+            },
+            "vehicule_bay": {
+                "name": "vehicule_bay",
+                "status": "disconnected"
+            },
+            "dormitories": {
+                "name": "dormitories",
+                "status": "crit_damaged"
+            },
+            "engine_room": {
+                "name": "engine_room",
+                "status": "disconnected"
+            },
+            "core_room": {
+                "name": "core_room",
+                "status": "crit_damaged"
+            },
+            "maintenance_room": {
+                "name": "maintenance_room",
+                "status": "crit_damaged"
+            },
+            "cockpit": {
+                "name": "cockpit",
+                "status": "disconnected"
+            }
+        }
+    }
+}

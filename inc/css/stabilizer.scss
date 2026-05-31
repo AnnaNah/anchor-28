@@ -1,0 +1,750 @@
+@use '../scss/common';
+
+$allPadSize: var(--stabilizer-size);
+
+$terminal-colors: (
+    "orange":  (#461d00, #883900, #ff6a00),
+    "green":   (#0d3113, #1b5e25, #39ff14),
+    "blue":    (#032030, #05445e, #00d2ff),
+    "red":     (#3a0007, #750011, #ff002b),
+    "yellow":  (#3c3500, #6b5f00, #ffe600),
+    "purple":  (#210038, #49007a, #bd00ff),
+    "cyan":    (#002e2c, #005c58, #00f5ec),
+    "pink":    (#3b0022, #7a0046, #ff0099),
+    "white":   (#222222, #9e9e9e, #ffffff),
+    "cobalt":  (#001242, #00227a, #3b71f7),
+    "olive":   (#252814, #444924, #b5c93b),
+    "magenta": (#2c003e, #5d0085, #e000ff),
+    "crimson": (#2b0505, #570b0b, #b80c0c),
+    "teal":    (#00241b, #004d3a, #00bfa0),
+    "gold":    (#3a2a00, #6e5000, #ffd000),
+    "gray":    (#151c1e, #343e42, #73797c)
+);
+
+:root {
+    font-family: "Fira Code", monospace;
+    
+    --stabilizer-size: 1.5rem;
+    --text-sizing: 1rem;
+    
+    @media screen and (max-width: 512px) {
+        --stabilizer-size: 0.75rem;
+        --text-sizing: .75rem;
+    }
+    
+    @media screen and (max-width: 380px) {
+        --text-sizing: .5rem;
+    }
+}
+
+html,
+body {
+        background-color: #2b2e33;
+        
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.45) 1px, transparent 1px),
+            linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.03) 75%, transparent 75%, transparent);
+        
+        background-size: 120px 120px, 120px 120px, 120px 120px;
+        
+        box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.85);
+}
+
+body.d-flex {
+    
+    gap: 1rem;
+    
+    @media screen and (orientation: landscape) {
+        flex-direction: row !important;
+    }
+    
+    @media screen and (orientation: portrait) {
+        flex-direction: column !important;
+    }
+}
+
+.container {
+    background-color: #939393;
+    position: relative;
+    
+    width: 100vw;
+    max-width: 100vh;
+    height: 100vh;
+    max-height: 100vw;
+    aspect-ratio: 1 / 1;
+    
+    padding: $allPadSize;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+    flex-wrap: wrap;
+    
+    box-shadow: 0 0 $allPadSize #000a;
+    
+    &.locked {
+        user-select: none;
+        pointer-events: none;
+    }
+
+    @each $state in ('wrong', 'success') {
+        &.#{$state} {
+            user-select: none;
+            pointer-events: none;
+    
+            .btn {
+    
+                &>button {
+                    animation: #{$state}Blink .3s ease-in-out infinite alternate;
+                }
+            }
+        }
+    }
+}
+
+.btn {
+    position: relative;
+    
+    padding: calc($allPadSize / 2);
+    border-radius: calc($allPadSize / 4);
+    overflow: hidden;
+    
+    width: calc(100% / 4);
+    height: calc(100% / 4);
+    
+    box-shadow: inset calc($allPadSize / 8) calc($allPadSize / 8) calc($allPadSize / 8) #fff5, inset calc($allPadSize / -8) calc($allPadSize / -8) calc($allPadSize / 8) #0005;
+    
+    &::after {
+        content: "";
+        background: {
+            image: linear-gradient(0deg, #464646, #787878 15%, 75%, #878787);
+            size: 100% 10%;
+        };
+        
+        border-radius: calc($allPadSize / 4);
+        display: block;
+        box-shadow: inset calc($allPadSize / 8) calc($allPadSize / 8) calc($allPadSize / 8) #fff5, inset calc($allPadSize / -8) calc($allPadSize / -8) calc($allPadSize / 8) #0005;
+        
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        
+        transform: translateY(-100%);
+        transition: transform .5s ease-in-out;
+    }
+    
+    &.disabled {
+        user-select: none;
+        pointer-events: none;
+        
+        &::after {
+            transform: translateY(0);
+        }
+    }
+    
+    // &>button {
+    //     cursor: pointer;
+        
+    //     width: 100%;
+    //     height: 100%;
+        
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+        
+    //     border-radius: 9999rem;
+    //     border: .5rem solid #555;
+        
+    //     background-color: #222;
+        
+    //     box-shadow: inset 0 calc($allPadSize / 2) $allPadSize #fff5, inset 0 calc($allPadSize / -2) $allPadSize #0008;
+        
+    //     transform: rotate(-45deg);
+        
+    //     transition: background-color 150ms ease-out, box-shadow 75ms ease-out, font-size 75ms ease-out;
+        
+    //     color: #fff5;
+    //     font-weight: bold;
+        
+    //     font-size: var(--text-sizing);
+        
+    //     @each $name, $colors in $terminal-colors {
+    //         &.#{$name} {
+    //             // background-color: nth($colors, 1);
+    //             border: .5rem solid nth($colors, 2);
+    //             // outline: 1px solid nth($colors, 1);
+                
+    //             &:hover {
+    //                 background-color: nth($colors, 3);
+    //             }
+                
+    //             &:active {
+    //                 background-color: nth($colors, 3);
+    //                 box-shadow: inset 0 calc($allPadSize / 4) $allPadSize #fff5, inset 0 calc($allPadSize / -4) $allPadSize #0008;
+    //                 font-size: calc(var(--text-sizing) * .9);
+    //             }
+                
+    //             &.clicked {
+    //                 background-color: nth($colors, 3);
+    //             }
+    //         }
+    //     }
+    // }
+
+    &>button {
+        cursor: pointer;
+        position: relative;
+        
+        width: 100%;
+        height: 100%;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        // --- STRUCTURE MÉCANIQUE RÉTRO ---
+        border-radius: 12px; 
+        border: .4rem solid #151515; 
+        background-color: #1a1a1a;
+        
+        // Ombres physiques du bouton poussoir
+        box-shadow: 
+            0 6px 0 #0b0b0b,
+            0 8px 10px rgba(0, 0, 0, 0.7),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.15), 
+            inset -2px -2px 4px rgba(0, 0, 0, 0.6);
+            
+        transform: translateY(-4px); // Bouton relevé par défaut
+        
+        transition: transform 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                    background-color 150ms ease, 
+                    box-shadow 100ms ease,
+                    color 150ms ease,
+                    text-shadow 150ms ease,
+                    border 100ms ease;
+        
+        // --- TEXTE STRUCTURE ---
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: var(--text-sizing);
+        
+        // Micro-stries rétro sur le plastique
+        background-image: linear-gradient(rgba(255,255,255,0.03) 50%, rgba(0,0,0,0.05) 50%);
+        background-size: 100% 4px; 
+        
+        // --- BOUCLE DES COULEURS ---
+        @each $name, $colors in $terminal-colors {
+            &.#{$name} {
+                // Plastique du bouton légèrement teinté dans la masse
+                border-color: mix(#000, nth($colors, 3), 50%);
+                
+                // MAGIE DE L'OPTION B : Le texte brille faiblement en mode "veille"
+                // mix() fusionne 70% de blanc avec 30% de ta couleur pour un rendu pastel lumineux
+                color: mix(#fff, nth($colors, 3), 70%); 
+                text-shadow: 0 0 5px rgba(nth($colors, 3), 0.6);
+    
+                // Halo de couleur permanent très discret à l'intérieur du bouton éteint
+                box-shadow: 
+                    0 6px 0 #0b0b0b,
+                    0 8px 10px rgba(0, 0, 0, 0.7),
+                    inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+                    inset 0 0 15px rgba(nth($colors, 3), 0.15);
+    
+                &:hover {
+                    // Au survol, le filament du néon commence à chauffer
+
+                    border-color: mix(#000, nth($colors, 3), 25%);
+                    // color: #fff;
+                    text-shadow: 0 0 8px nth($colors, 1), 0 0 15px rgba(nth($colors, 3), 0.8);
+                    
+                    box-shadow: 
+                        0 6px 0 #0b0b0b,
+                        0 8px 12px rgba(0, 0, 0, 0.8),
+                        inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+                        inset 0 0 20px rgba(nth($colors, 3), 0.5);
+                }
+                
+                // --- ENCLENCHEMENT / SEQUENCE SIMON ---
+                &:active, &.clicked {
+                    background-color: nth($colors, 1); // Explosion de couleur vive !
+                    border-color: lighten(nth($colors, 3), 10%);
+                    color: #fff;
+                    
+                    transform: translateY(2px); // Enfoncement mécanique
+                    
+                    // Énorme flash lumineux externe et interne
+                    box-shadow: 
+                        0 0px 0 #0b0b0b,
+                        0 2px 4px rgba(0, 0, 0, 0.5),
+                        0 0 25px nth($colors, 1), 
+                        inset 0 0 20px rgba(255, 255, 255, 0.7), 
+                        inset -2px -2px 10px rgba(0, 0, 0, 0.2);
+                    
+                    // Le texte s'illumine violemment (effet néon à pleine puissance)
+                    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px nth($colors, 1);
+                }
+            }
+        }
+    }
+}
+
+.bolt {
+    position: absolute;
+
+    display: block;
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg id='Calque_1' data-name='Calque 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 %7B fill: %23575756; %7D .cls-2 %7B fill: %23b2b2b2; %7D .cls-3 %7B fill: %23706f6f; %7D .cls-4 %7B fill: %23878787; %7D %3C/style%3E%3C/defs%3E%3Cpolygon class='cls-3' points='384 34.3 128 34.3 0 256 128 477.7 384 477.7 512 256 384 34.3'/%3E%3Cg%3E%3Cpolygon class='cls-4' points='376 48.15 136 48.15 16 256 136 463.85 376 463.85 496 256 376 48.15'/%3E%3Cpolygon class='cls-1' points='43.06 209.12 16 256 43.06 302.88 468.94 302.88 496 256 468.94 209.12 43.06 209.12'/%3E%3Cpolygon class='cls-3' points='43.06 209.12 468.94 209.12 458.11 190.38 53.89 190.38 43.06 209.12'/%3E%3Cpolygon class='cls-2' points='53.89 321.62 458.11 321.62 468.94 302.88 43.06 302.88 53.89 321.62'/%3E%3Cpolygon class='cls-3' points='53.89 321.62 136 463.85 376 463.85 391.7 436.65 265.38 443.46 141.87 416.89 98.79 346.52 53.89 321.62'/%3E%3Cpolygon class='cls-2' points='136 48.15 121.27 73.66 208.65 90.88 352.99 80.11 398.95 151.2 458.11 190.38 376 48.15 136 48.15'/%3E%3C/g%3E%3Cpolygon class='cls-1' points='128 34.3 136 48.15 376 48.15 496 256 512 256 384 34.3 128 34.3'/%3E%3Cpolygon class='cls-2' points='0 256 16 256 136 463.85 376 463.85 384 477.7 128 477.7 0 256'/%3E%3C/svg%3E");
+    
+    width: calc($allPadSize / 1.25);
+    height: calc($allPadSize / 1.25);
+    aspect-ratio: 1 / 1;
+    
+    &:nth-of-type(1) {
+        top: calc($allPadSize / 4);
+        left: calc($allPadSize / 4);
+        transform: rotate(35deg);
+    }
+    
+    &:nth-of-type(2) {
+        top: calc($allPadSize / 4);
+        right: calc($allPadSize / 4);
+        transform: rotate(288deg);
+    }
+    
+    &:nth-of-type(3) {
+        bottom: calc($allPadSize / 4);
+        left: calc($allPadSize / 4);
+        transform: rotate(86deg);
+    }
+    
+    &:nth-of-type(4) {
+        bottom: calc($allPadSize / 4);
+        right: calc($allPadSize / 4);
+        transform: rotate(125deg);
+    }
+}
+
+// BASE
+// .screen {
+//     display: flex;
+//     align-items: center;
+    
+//     background-color: #000;
+//     border: calc($allPadSize / 4) solid #000;
+    
+//     width: 25%;
+//     height: $allPadSize;
+    
+//     text-transform: uppercase;
+    
+//     z-index: 999;
+//     position: absolute;
+//     top: 0;
+//     left: 50%;
+    
+//     transform: translateX(-50%);
+    
+//     overflow: hidden;
+//     border-radius: .25rem;
+    
+//     box-shadow: calc($allPadSize / -4) calc($allPadSize / -4) 0 #939393, calc($allPadSize / 4) calc($allPadSize / -4) 0 #939393;
+    
+//     &>* {
+//         width: fit-content;
+//         white-space: pre;
+        
+//         color: #fff;
+//         font-weight: bold;
+//         font-size: var(--text-sizing);
+        
+//         position: absolute;
+//         top: 50%;
+        
+//         animation: hintLoop 5s linear infinite;
+        
+//         span {
+//             padding-right: 1rem;
+            
+//             @each $name, $colors in $terminal-colors {
+                
+//                 &.#{$name} {
+//                     color: nth($colors, 3);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// TEST 1
+// .screen {
+//     display: flex;
+//     align-items: center;
+    
+//     // Un noir très profond tirant subtilement sur le vert radioactif
+//     background-color: #040805; 
+    
+//     // Une vraie bordure métallique sombre pour encastrer la dalle de verre
+//     border: calc($allPadSize / 4) solid #1a1a1a; 
+    
+//     width: 25%;
+//     height: $allPadSize;
+    
+//     text-transform: uppercase;
+    
+//     z-index: 999;
+//     position: absolute;
+//     top: 0;
+//     left: 50%;
+    
+//     transform: translateX(-50%);
+    
+//     overflow: hidden;
+//     border-radius: .5rem; // Angles un poil plus doux pour le côté tube bombé
+    
+//     // Tes calages gris d'origine + l'ombrage 3D du moniteur CRT
+//     box-shadow: 
+//         calc($allPadSize / -4) calc($allPadSize / -4) 0 #939393, 
+//         calc($allPadSize / 4) calc($allPadSize / -4) 0 #939393,
+//         0 6px 10px rgba(0, 0, 0, 0.5),           // Ombre portée sous le boîtier
+//         inset 0 0 20px rgba(0, 0, 0, 0.95),      // Le vignetage : coins du tube de verre assombris
+//         inset 0 2px 4px rgba(255, 255, 255, 0.1); // Léger reflet de lumière sur le haut du moniteur
+
+//     // --- LE FILTRE MAGIQUE : GRILLE DE SCANLINES ET PHOSPHORE ---
+//     &::before {
+//         content: " ";
+//         display: block;
+//         position: absolute;
+//         top: 0; left: 0; bottom: 0; right: 0;
+//         z-index: 10;
+//         pointer-events: none; // Interdit de bloquer les clics de souris
+        
+//         // Un double dégradé : stries horizontales noires + fine grille RVB de phosphore
+//         background: 
+//             linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), 
+//             linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+//         background-size: 100% 3px, 6px 100%; 
+//     }
+    
+//     &>* {
+//         width: fit-content;
+//         white-space: pre;
+        
+//         color: #fff;
+//         font-weight: 900; // On épaissit pour que le texte reste lisible sous le glow
+//         font-size: var(--text-sizing);
+        
+//         position: absolute;
+//         top: 50%;
+        
+//         animation: hintLoop 6s linear infinite; // Légèrement ralenti pour le confort visuel
+        
+//         // Un infime flou de persistance pour imiter la rémanence des vieux écrans
+//         filter: blur(0.2px);
+        
+//         span {
+//             padding-right: 1.5rem; // On espace un peu plus pour l'effet chenille
+//             display: inline-block;
+            
+//             @each $name, $colors in $terminal-colors {
+//                 &.#{$name} {
+//                     // La couleur vive (index 3) pour le texte
+//                     color: nth($colors, 3); 
+                    
+//                     // Un double halo néon : un cœur intense + une émanation diffuse
+//                     text-shadow: 
+//                         0 0 4px nth($colors, 3), 
+//                         0 0 10px rgba(nth($colors, 3), 0.6);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// TEST 2
+// .screen {
+//     display: flex;
+//     align-items: center;
+    
+//     // Un fond vert/bleu abyssal très sombre, presque noir
+//     background-color: #030d0a; 
+    
+//     // Une fente nette et métallique dans la console
+//     border: calc($allPadSize / 5) solid #111; 
+//     border-bottom-color: #222; // Petit reflet de lumière sur le bas de la fente
+    
+//     width: 25%;
+//     height: $allPadSize;
+//     text-transform: uppercase;
+//     z-index: 999;
+//     position: absolute;
+//     top: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     overflow: hidden;
+//     border-radius: 4px;
+    
+//     // Une ombre "fente profonde" + une légère lueur qui s'échappe de l'hologramme
+//     box-shadow: 
+//         calc($allPadSize / -4) calc($allPadSize / -4) 0 #939393, 
+//         calc($allPadSize / 4) calc($allPadSize / -4) 0 #939393,
+//         0 8px 16px rgba(0,0,0,0.6),
+//         inset 0 4px 8px rgba(0, 0, 0, 0.9), // Effet de profondeur dans la console
+//         0 0 15px rgba(0, 255, 150, 0.05); // Halo très discret qui bave sur le métal
+
+//     // On remplace le filtre de lignes par un dégradé de lumière qui vient du bas !
+//     &::before {
+//         content: " ";
+//         display: block;
+//         position: absolute;
+//         top: 0; left: 0; bottom: 0; right: 0;
+//         z-index: 10;
+//         pointer-events: none;
+//         // Un projecteur de lumière qui s'estompe vers le haut
+//         background: linear-gradient(0deg, rgba(0, 255, 100, 0.06) 0%, transparent 60%);
+//     }
+    
+//     &>* {
+//         width: fit-content;
+//         white-space: pre;
+//         color: #fff;
+//         font-weight: 700;
+//         font-size: var(--text-sizing);
+//         position: absolute;
+//         top: 50%;
+//         animation: hintLoop 6s linear infinite;
+        
+//         // ZÉRO BLUR ! Le texte vectoriel doit être tranchant comme un rasoir
+//         filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+        
+//         span {
+//             padding-right: 1.5rem;
+//             display: inline-block;
+            
+//             @each $name, $colors in $terminal-colors {
+//                 &.#{$name} {
+//                     color: nth($colors, 3); 
+//                     // Un laser néon ultra net (pas de gros flou baveux)
+//                     text-shadow: 
+//                         0 0 2px #fff,
+//                         0 0 6px nth($colors, 3),
+//                         0 0 12px rgba(nth($colors, 3), 0.5);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// TEST 3
+// .screen {
+//     display: flex;
+//     align-items: center;
+    
+//     // Un fond "dalle LCD éteinte" (un gris-vert militaire très mat)
+//     background-color: #1b221e; 
+    
+//     // Un joint en caoutchouc noir autour de la dalle
+//     border: calc($allPadSize / 6) solid #0a0a0a; 
+    
+//     width: 25%;
+//     height: $allPadSize;
+//     text-transform: uppercase;
+//     z-index: 999;
+//     position: absolute;
+//     top: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     overflow: hidden;
+//     border-radius: 2px; // Très rectangulaire, très industriel
+    
+//     box-shadow: 
+//         calc($allPadSize / -4) calc($allPadSize / -4) 0 #939393, 
+//         calc($allPadSize / 4) calc($allPadSize / -4) 0 #939393,
+//         inset 1px 1px 3px rgba(0,0,0,0.8), // Encastrement de la vitre
+//         inset -1px -1px 3px rgba(255,255,255,0.1);
+
+//     // Pas de ::before complexe, juste un subtil reflet oblique de vitre protectrice
+//     &::before {
+//         content: " ";
+//         display: block;
+//         position: absolute;
+//         top: 0; left: 0; bottom: 0; right: 0;
+//         z-index: 10;
+//         pointer-events: none;
+//         background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 40%);
+//     }
+    
+//     &>* {
+//         width: fit-content;
+//         white-space: pre;
+//         font-weight: 900;
+//         font-size: var(--text-sizing);
+//         position: absolute;
+//         top: 50%;
+//         animation: hintLoop 7s linear infinite; // Vitesse posée pour bien lire
+        
+//         span {
+//             padding-right: 1.8rem;
+//             display: inline-block;
+            
+//             @each $name, $colors in $terminal-colors {
+//                 &.#{$name} {
+//                     // La couleur vive
+//                     color: nth($colors, 3); 
+                    
+//                     // Effet de texte à haute valeur énergétique (lumière blanche au cœur)
+//                     text-shadow: 
+//                         0 0 3px #fff, 
+//                         0 0 8px nth($colors, 3);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// TEST 4
+// .screen {
+//     display: flex;
+//     align-items: center;
+    
+//     // L'écran se fond COMPLETEMENT dans la console
+//     background-color: #939393; 
+    
+//     // Une fente fine, comme si la plaque de métal était découpée au laser
+//     border: none;
+//     border-top: 3px solid #6e6e6e;
+//     border-bottom: 3px solid #b5b5b5;
+    
+//     width: 25%;
+//     height: $allPadSize;
+//     text-transform: uppercase;
+//     z-index: 999;
+//     position: absolute;
+//     top: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     overflow: hidden;
+    
+//     // Une ombre qui montre que ça s'enfonce dans la console, c'est tout
+//     box-shadow: inset 0 3px 5px rgba(0,0,0,0.4);
+
+//     &::before { display: none; } // On vire définitivement les filtres crados
+    
+//     &>* {
+//         width: fit-content;
+//         white-space: pre;
+//         font-weight: 900;
+//         font-size: var(--text-sizing);
+//         position: absolute;
+//         top: 50%;
+//         animation: hintLoop 6s linear infinite;
+        
+//         span {
+//             padding-right: 1.5rem;
+//             display: inline-block;
+            
+//             @each $name, $colors in $terminal-colors {
+//                 &.#{$name} {
+//                     // Couleur hyper contrastée, pas de lueur diffuse, juste du texte propre
+//                     color: nth($colors, 3); 
+//                     text-shadow: 0 1px 0 rgba(255,255,255,0.2), 0 -1px 0 rgba(0,0,0,0.5);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+//TEST 5
+.screen {
+    display: flex;
+    align-items: center;
+    background-color: #151816; 
+    border: .3rem solid #222;
+    
+    width: 25%;
+    height: $allPadSize;
+    text-transform: uppercase;
+    z-index: 999;
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    overflow: hidden;
+    border-radius: 3px;
+    
+    box-shadow: 
+        calc($allPadSize / -4) calc($allPadSize / -4) 0 #939393, 
+        calc($allPadSize / 4) calc($allPadSize / -4) 0 #939393,
+        inset 0 0 10px rgba(0,0,0,0.8);
+
+    // TEXTURE VERRE SABLE : Une micro-texture de grain
+    &::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.15;
+        background-image: 
+                        radial-gradient(circle at 50% 50%, #fff 10%, transparent 20%),
+                        radial-gradient(circle at 0 0, #000 10%, transparent 20%);
+        background-size: 3px 3px;
+    }
+    
+    &>* {
+        width: fit-content;
+        white-space: pre;
+        font-weight: 800;
+        font-size: var(--text-sizing);
+        position: absolute;
+        top: 50%;
+        animation: hintLoop 6s linear infinite;
+        
+        span {
+            padding-right: 1.5rem;
+            display: inline-block;
+            
+            @each $name, $colors in $terminal-colors {
+                &.#{$name} {
+                    color: nth($colors, 3);
+                    // Le texte bave de façon très diffuse derrière le plastique dépoli
+                    filter: blur(0.5px);
+                    text-shadow: 0 0 8px nth($colors, 3);
+                }
+            }
+        }
+    }
+}
+
+
+@keyframes hintLoop {
+    from {
+        left: 100%;
+        transform: translateX(0) translateY(-50%);
+    }
+    to {
+        left: 0;
+        transform: translateX(-100%) translateY(-50%);
+    }
+}
+
+@keyframes wrongBlink {
+    from {
+        background-color: #222;
+    }
+    to {
+        background-color: #ff002b;
+    }
+}
+
+@keyframes successBlink {
+    from {
+        background-color: #222;
+    }
+    90%, to {
+        background-color: #00bf50
+    }
+}

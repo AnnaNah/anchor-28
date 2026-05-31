@@ -1,0 +1,84 @@
+{
+    "help": {
+        "name": "help",
+        "commandName": "help",
+        "help_list": true,
+        "description": "Affiche la liste des commandes système standard disponibles.",
+        "specified": "HELP [commande]<br>Fournit des informations d'aide détaillées sur une commande spécifiée.<br><br>Exemple : HELP open"
+    },
+
+    "superhelp": {
+        "name": "superhelp",
+        "commandName": "superhelp",
+        "help_list": false,
+        "description": "Accède à l'aide avancée du noyau et liste les protocoles restreints.",
+        "specified": "SUPERHELP [commande_cachee]<br>Affiche les spécifications techniques d'un protocole d'override ou d'une fonction de maintenance masquée."
+    },
+
+    "rootmode": {
+        "name": "rootmode",
+        "commandName": "rootmode",
+        "help_list": true,
+        "description": "Met à niveau l'accréditation de sécurité via une clé d'accès.",
+        "specified": "ROOTMODE [cle_authentification]<br>Tente d'élever les privilèges d'un module en soumettant une clé de sécurité.<br><br>Exemple : ROOTMODE CRRM-99X-APC5"
+    },
+
+    "redirect": {
+        "name": "redirect",
+        "commandName": "redirect",
+        "help_list": false,
+        "description": "Redirige un flux de données réseau ou réaligne une antenne locale.",
+        "specified": "REDIRECT [source] [destination]<br>Transfère le flux de paquets d'un point d'ancrage vers un terminal ou un sous-système externe.<br><br>Exemple : REDIRECT COM-PORT-1 LOCAL-TERM"
+    },
+
+    "combine": {
+        "name": "combine",
+        "commandName": "combine",
+        "help_list": true,
+        "description": "Fusionne deux éléments chimiques, composants ou clés de décryptage.",
+        "specified": "COMBINE [objet_1] [objet_2]<br>Tente d'assembler deux ressources de l'inventaire pour générer un nouvel item ou un code d'accès valide.<br><br>Exemple : COMBINE pile_vide noyau_energie"
+    },
+
+    "open": {
+        "name": "open",
+        "commandName": "open",
+        "help_list": true,
+        "description": "Ouvre un fichier texte, un conteneur sécurisé ou une passerelle pneumatique.",
+        "specified": "OPEN [cible]<br>Exécute la séquence d'ouverture ou de lecture sur la cible désignée (dossier, porte, sas).<br><br>Exemple : OPEN sas_principal"
+    },
+
+    "manual": {
+        "name": "manual",
+        "commandName": "manual",
+        "help_list": true,
+        "description": "Consulte le manuel technique et les protocoles de dépannage des modules de l'Ancre.",
+        "specified": "MANUAL [nom_module]<br>Affiche les procédures d'urgence, les guides d'interconnexion et les indices de maintenance pour le module spécifié.<br><br>Exemple : MANUAL core_room"
+    },
+
+    "checkmod": {
+        "name": "checkmod",
+        "commandName": "checkmod",
+        "help_list": true,
+        "description": "Affiche l'état des modules de l'Ancre.",
+        "specified": "CHECKMOD [module]<br>Vérifie et affiche le statut d'intégrité en temps réel du module spécifié depuis le registre système.<br><br>Exemple : CHECKMOD terminal"
+    },
+
+    "logbook": {
+        "name": "logbook",
+        "commandName": "logbook",
+        "help_list": false,
+        "description": "Accède aux archives de la Light Operation Unit et liste les entrées de journal.",
+        "specified": "LOGBOOK [numero_entree]<br>Charge et affiche le contenu textuel d'un rapport ou d'un journal de bord enregistré dans la mémoire centrale.<br><br>Exemple : LOGBOOK log-47",
+        "logs": {
+            "log-5": "Je continue de chercher des survivants de mon secteur du vaisseau, mais les probabilités de succès chutent de 2,4% chaque jour. Ma structure interne — ce que j'appelle ma \"constitution différente\" — me permet de soulever des plaques de métal sans ressentir la fatigue que je vois chez les autres humains. C'est une chance. J'ai été conçue pour soigner et réparer le grand vaisseau, mais le vaisseau n'est plus qu'une carcasse. Je dois transférer mes protocoles sur les morceaux restants. Et sur les gens.<br>J'ai croisé un groupe aujourd'hui. Ils se dirigent vers un point de ralliement qu'ils nomment \"Rusty Heaven\". Ils ont l'air si fragiles, si prompts à la rupture cutanée et osseuse. Je vais les suivre. C'est là que mes compétences en réparation humaine seront le plus utiles.",
+            "log-18": "[ --- FILE CORRUPTED --- ]",
+            "log-47": "Je me suis bien intégrée à la communauté. Lys, la Première matriarche de Rusty Heaven, m'a officiellement assignée aux soins médicaux. Elle a un grand sens des responsabilités, mais son rythme cardiaque est trop élevé quand elle pense que personne ne regarde.<br>Aujourd'hui, j'ai aidé Sarah Jules dans ses serres. Elle fait un travail remarquable avec ses plantes hybrides pour nourrir la population. Quand j'ai touché une des tiges épineuses, ma peau s'est entaillée. J'ai dû rapidement dissimuler ma main avant que Sarah ne voie que le liquide qui perlait n'était pas tout à fait rouge, et que la cicatrisation a pris exactement 42 secondes. Je lui ai dit que c'était juste une égratignure superficielle. Ma \"différence\" doit rester mon secret, pour ne pas les effrayer. Je suis juste une humaine plus résistante, bâtie pour endurer.",
+            "log-50": "[ --- FILE MISSING --- ]",
+            "log-98": "Nouvelle attaque des Vagabonds de Kelix cet après-midi. Le camp a subi des dégâts. Gordon, notre cuisinier (qui cache sous son tablier d'anciens réflexes de militaire très aiguisés), a réussi à repousser le premier assaut avec une efficacité impressionnante.<br>Malheureusement, il y a eu des blessés. J'ai passé la nuit à recoudre des chairs. Sofian le Nase est venu m'aider à transporter les blessés. C'est un homme profondément pacifiste qui gère l'arsenal. Il refusait d'ouvrir la réserve d'armes jusqu'à ce que la situation devienne une force majeure. Je comprends sa logique mathématique : plus d'armes en circulation équivaut à une hausse du taux de mortalité accidentelle. Mais face aux Vagabonds, l'absence de défense réduit nos chances de survie globale. Mes mains ne tremblent jamais pendant les sutures. Les blessés me disent souvent que j'ai un \"calme d'ange\". C'est juste que ma panique interne ne s'exprime pas par des hormones.",
+            "log-129": "[ --- FILE CORRUPTED --- ]",
+            "log-144": "[ --- FILE CORRUPTED --- ]",
+            "log-173": "Ma carrosserie — mon corps — a quelques micro-rayures que je camoufle sous des vêtements amples, mais mes banques de données sont pleines de visages que j'aime.<br>Rusty Heaven est devenue ma nouvelle mission. Le grand vaisseau spatial ne revolera jamais, mais ce camp est un autre genre de navire qui navigue à travers le chaos de cette planète. Entre les assauts des Vagabonds de Kelix, les pénuries et les maladies, ces humains survivent grâce à leur volonté. Et moi, l'humaine \"différente\", je serai toujours là pour recoudre leurs plaies, réparer les moteurs de Ludwig et veiller sur eux. Tant que mes batteries… pardon, tant que mon cœur battra.",
+            "log-202": "[ --- FILE ENCRYPTED --- ]"
+        }
+    }
+}

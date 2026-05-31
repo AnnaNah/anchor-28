@@ -1,0 +1,38 @@
+{
+    "terminal": {
+        "has_hierarchy": false,
+        "name": "terminal",
+        "status": "safe_mode",
+        "codes": {
+            "upgrade_1": "TRML-K9F-4L0P",
+            "upgrade_2": "TRML-V2N-8R5T"
+        }
+    },
+    "stabilizer": {
+        "has_hierarchy": false,
+        "name": "stabilizer",
+        "status": "safe_mode",
+        "codes": {
+            "upgrade_1": "STZR-A7B-9X2Q",
+            "upgrade_2": "STZR-J5C-1M7W"
+        }
+    },
+    "manual_rerouter": {
+        "has_hierarchy": false,
+        "name": "manual_rerouter",
+        "status": "safe_mode",
+        "codes": {
+            "upgrade_1": "MLRR-T8D-6Y3K",
+            "upgrade_2": "MLRR-H4Z-2P9N"
+        }
+    },
+    "generator": {
+        "has_hierarchy": false,
+        "name": "generator",
+        "status": "safe_mode",
+        "codes": {
+            "upgrade_1": "GNTR-E3R-5G8J",
+            "upgrade_2": "GNTR-Q1W-7B4F"
+        }
+    }
+}

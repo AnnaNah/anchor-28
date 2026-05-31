@@ -1,0 +1,5 @@
+@each $value in (uppercase, lowercase, capitalize, normal) {
+    .text-#{$value} {
+        text-transform: $value;
+    }
+}
