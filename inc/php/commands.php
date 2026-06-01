@@ -1,108 +1,102 @@
 <?php
 
+// ------------------------------//
+// ------------ HELP ------------//
+// ------------------------------//
+
 function help(string $command = '') {
     $jsonPath = $_SERVER['DOCUMENT_ROOT'] . '/inc/json/commands.json';
     $commands = json_decode(file_get_contents($jsonPath), true);
 
-    // Si l'utilisateur a juste tapé "help" sans argument
     if (!$command || $command == '') {
-        
-        $respTemplate = []; // On va carrément créer un tableau de lignes, ce sera plus simple pour ton JS !
+        $respTemplate = [];
         
         foreach ($commands as $key => $value) {
-            // Si la commande doit être affichée dans la liste d'aide
-            if ($value['help_list']) {
-                // On utilise le point (.) pour concaténer, et on corrige l'orthographe de "description"
+            // On vérifie que la commande est déverrouillée ET qu'elle est listable
+            $isUnlocked = isset($value['unlocked']) ? $value['unlocked'] : true;
+            if (isset($value['help_list']) && $value['help_list'] && $isUnlocked) {
                 $ligne = str_pad(strtoupper($value['name']), 15) . $value['description'];
                 $respTemplate[] = $ligne;
             }
         }
-        
-        return join('<br>', $respTemplate); // On renvoie le tableau de lignes
-    } 
-    
-    // Si l'utilisateur a tapé "help open" par exemple
-    else {
+        return join('<br>', $respTemplate);
+    } else {
         $commandTarget = strtolower($command);
+        $isUnlocked = isset($commands[$commandTarget]['unlocked']) ? $commands[$commandTarget]['unlocked'] : true;
         
-        if (isset($commands[$commandTarget]) && $commands[$commandTarget]['help_list']) {
-            // On renvoie la description détaillée (le champ specified du JSON)
-            // On utilise explode pour séparer les retours à la ligne du JSON en lignes de tableau
-            // return explode("\n", $commands[$commandTarget]['specified']);
+        if (isset($commands[$commandTarget]) && isset($commands[$commandTarget]['help_list']) && $commands[$commandTarget]['help_list'] && $isUnlocked) {
             return '<span class="mb-2">' . $commands[$commandTarget]['description'] . '</span><br>' . $commands[$commandTarget]['specified'];
         } else {
             return ['<span class="alert">Aucune aide disponible pour la commande : ' . $command . '</span>'];
         }
     }
 }
+
+// -----------------------------//
+// --------- SUPERHELP ---------//
+// -----------------------------//
 
 function superhelp(string $command = '') {
     $jsonPath = $_SERVER['DOCUMENT_ROOT'] . '/inc/json/commands.json';
     $commands = json_decode(file_get_contents($jsonPath), true);
 
-    // Si l'utilisateur a juste tapé "help" sans argument
     if (!$command || $command == '') {
-        
-        $respTemplate = []; // On va carrément créer un tableau de lignes, ce sera plus simple pour ton JS !
+        $respTemplate = [];
         
         foreach ($commands as $key => $value) {
-            // On utilise le point (.) pour concaténer, et on corrige l'orthographe de "description"
-            $ligne = str_pad(strtoupper($value['name']), 15) . $value['description'];
-            $respTemplate[] = $ligne;
+            $isUnlocked = isset($value['unlocked']) ? $value['unlocked'] : true;
+            if ($isUnlocked) {
+                $ligne = str_pad(strtoupper($value['name']), 15) . $value['description'];
+                $respTemplate[] = $ligne;
+            }
         }
-        
-        return join('<br>', $respTemplate); // On renvoie le tableau de lignes
-    } 
-    
-    // Si l'utilisateur a tapé "help open" par exemple
-    else {
+        return join('<br>', $respTemplate);
+    } else {
         $commandTarget = strtolower($command);
+        $isUnlocked = isset($commands[$commandTarget]['unlocked']) ? $commands[$commandTarget]['unlocked'] : true;
         
-        if (isset($commands[$commandTarget])) {
-            // On renvoie la description détaillée (le champ specified du JSON)
-            // On utilise explode pour séparer les retours à la ligne du JSON en lignes de tableau
-            // return explode("\n", $commands[$commandTarget]['specified']);
+        if (isset($commands[$commandTarget]) && $isUnlocked) {
             return '<span class="mb-2">' . $commands[$commandTarget]['description'] . '</span><br>' . $commands[$commandTarget]['specified'];
         } else {
             return ['<span class="alert">Aucune aide disponible pour la commande : ' . $command . '</span>'];
         }
     }
 }
+
+// -----------------------------//
+// ---------- LOGBOOK ----------//
+// -----------------------------//
 
 function logbook(string $command = '') {
     $jsonPath = $_SERVER['DOCUMENT_ROOT'] . '/inc/json/commands.json';
     $commands = json_decode(file_get_contents($jsonPath), true);
 
     function displayList(array $list) {
-        $respTemplate = []; // On va carrément créer un tableau de lignes, ce sera plus simple pour ton JS !
+        $respTemplate = [];
         foreach ($list['logbook']['logs'] as $key => $value) {
-            // On utilise le point (.) pour concaténer, et on corrige l'orthographe de "description"
-            $ligne = strtoupper($key);
-            $respTemplate[] = $ligne;
+            if ($key !== 'unlocked') { // On évite d'afficher la clé "unlocked" comme un log
+                $ligne = strtoupper($key);
+                $respTemplate[] = $ligne;
+            }
         }
-        return join('<br>', $respTemplate); // On renvoie le tableau de lignes
+        return join('<br>', $respTemplate);
     }
 
-    // Si l'utilisateur a juste tapé "help" sans argument
     if (!$command || $command == '') {
-        
         return displayList($commands);
-    } 
-    
-    // Si l'utilisateur a tapé "help open" par exemple
-    else {
+    } else {
         $commandTarget = strtr(strtolower($command), ' ', '-');
-        
         if (isset($commands['logbook']['logs'][$commandTarget])) {
-            // On renvoie la description détaillée (le champ specified du JSON)
-            // On utilise explode pour séparer les retours à la ligne du JSON en lignes de tableau
-            // return explode("\n", $commands[$commandTarget]['specified']);
-            return strtoupper($commandTarget) . ':<br>' . $commands['logbook']['logs'][$commandTarget];
+            return '<span class="highlight">' . strtoupper($commandTarget) . ':</span><br>' . $commands['logbook']['logs'][$commandTarget];
         } else {
             return ['<span class="alert">Aucune entrée n\'a été trouvée pour "' . strtoupper($commandTarget) . '".</span><br><span class="lowlight">Essayez:<br>' . displayList($commands) . '</span>'];
         }
     }
 }
+
+// ------------------------------//
+// ---------- CHECKMOD ----------//
+// ------------------------------//
 
 function checkmod(string $command = '') {
     $PAD_LENGTH = 30;
@@ -120,10 +114,10 @@ function checkmod(string $command = '') {
                 $output[] = '<span class="highlight">[ ' . strtoupper($el['name']) . ' ]</span>';
 
                 foreach ($el['content'] as $subel) {
-                    $output[] = '    ' . str_pad($subel['name'], $PAD_LENGTH - 4, " ") . '|  ' . $subel['status'];
+                    $output[] = '    ' . '[' . $subel['shortcode'] . ']' . str_pad($subel['name'], $PAD_LENGTH - 4, " ") . '  |  ' . $subel['status'];
                 }
             } else {
-                $output[] = str_pad($el['name'], $PAD_LENGTH, " ") . '|  ' . $el['status'];
+                $output[] = str_pad('[' . $el['shortcode'] . ']' . $el['name'], $PAD_LENGTH + 6, " ") . '  |  ' . $el['status'];
             }
         }
 
@@ -145,25 +139,27 @@ function checkmod(string $command = '') {
     $target = strtolower(trim($command));
     
     foreach ($status as $el) {
-        
         if (strtolower($el['name']) === $target) {
             if (isset($el['has_hierarchy']) && $el['has_hierarchy'] == true) {
                 return join('<br>', $formatOutput([$el], $PAD_LENGTH));
             }
-            return [str_pad($el['name'], $PAD_LENGTH, " ") . '|  ' . $el['status']];
+            return [str_pad('[' . $el['shortcode'] . ']' . $el['name'], $PAD_LENGTH, " ") . '  |  ' . $el['status']];
         }
 
         if (isset($el['has_hierarchy']) && $el['has_hierarchy'] == true && isset($el['content'])) {
             foreach ($el['content'] as $subel) {
                 if (strtolower($subel['name']) === $target) {
-                    return [str_pad($subel['name'], $PAD_LENGTH, " ") . '|  ' . $subel['status']];
+                    return [str_pad('[' . $el['shortcode'] . ']' . $subel['name'], $PAD_LENGTH, " ") . '  |  ' . $subel['status']];
                 }
             }
         }
     }
-
     return ["Module '" . $command . "' introuvable dans le registre de l'Ancre."];
 }
+
+// ------------------------------//
+// ----------- MANUAL -----------//
+// ------------------------------//
 
 function manual(string $command = '') {
     $jsonPath = $_SERVER['DOCUMENT_ROOT'] . '/inc/json/manual.json';
@@ -194,9 +190,7 @@ function manual(string $command = '') {
     $target = strtolower(trim($command));
 
     if (isset($manualData[$target])) {
-        
         $currentStatus = 'safe_mode';
-        
         if (file_exists($statusPath)) {
             $statusData = json_decode(file_get_contents($statusPath), true);
             if (isset($statusData[$target]['status'])) {
@@ -206,7 +200,6 @@ function manual(string $command = '') {
 
         if (isset($manualData[$target][$currentStatus])) {
             $textBlock = $manualData[$target][$currentStatus];
-            
             if (is_array($textBlock)) {
                 return [join('<br>', $textBlock)];
             } else {
@@ -224,4 +217,166 @@ function manual(string $command = '') {
     ];
     
     return [join('<br>', $errorLines)];
+}
+
+// -----------------------------//
+// ---------- ROOTMOD ----------//
+// -----------------------------//
+
+function rootmod(string $command = '') {
+    if (!$command || $command === '') {
+        return '<span class="alert">ERREUR : Clé d\'authentification manquante.<br>Syntaxe : ROOTMOD [cle_authentification]</span>';
+    }
+
+    $keyToTest = strtoupper(trim($command));
+    $statusPath = $_SERVER['DOCUMENT_ROOT'] . '/inc/json/status.json';
+    
+    if (!file_exists($statusPath)) {
+        return '<span class="alert">ERREUR CRITIQUE : Registre des statuts introuvable.</span>';
+    }
+
+    $statusData = json_decode(file_get_contents($statusPath), true);
+    $statusData = is_array($statusData) ? $statusData : [];
+
+    foreach ($statusData as $moduleKey => $moduleInfo) {
+        if (isset($moduleInfo['code']) && is_array($moduleInfo['code']) && isset($moduleInfo['shortcode'])) {
+            $shortcode = strtoupper($moduleInfo['shortcode']);
+            
+            foreach ($moduleInfo['code'] as $upgradeLevel => $codeValue) {
+                $expectedKey = $shortcode . '-' . strtoupper($codeValue);
+                
+                if ($keyToTest === $expectedKey) {
+                    $moduleName = strtoupper($moduleInfo['name']);
+                    $response = [];
+                    $response[] = '<span class="highlight">[ ACCÈS AUTORISÉ ]</span>';
+                    $response[] = 'Clé valide reconnue pour le module: [' . $shortcode . '] ' . $moduleName;
+                    
+                    $newState = null; 
+                    
+                    if ($upgradeLevel === 'upgrade_1' && $moduleInfo['status'] === 'safe_mode') {
+                        $response[] = '-> Changement d\'état: <span class="highlight">REBOOTING</span> (Accès partiellement restauré)';
+                        $newState = 'rebooting';
+                    }
+                    elseif ($upgradeLevel === 'upgrade_1' && $moduleInfo['status'] === 'rebooting') {
+                        $response[] = '<span class="alert">-> Changement d\'état annulé: <span class="highlight">REBOOTING</span> déjà activé.</span>';
+                    }
+                    elseif ($upgradeLevel === 'upgrade_2' && $moduleInfo['status'] === 'rebooting') {
+                        $response[] = '-> Changement d\'état: <span class="highlight">ONLINE</span> (Accès total)';
+                        $newState = 'online';
+                    }
+                    elseif ($upgradeLevel === 'upgrade_2' && $moduleInfo['status'] === 'online') {
+                        $response[] = '<span class="alert">-> Changement d\'état annulé: <span class="highlight">ONLINE</span> déjà activé.</span><br>Ce module d\'urgence est opérationnel.';
+                    }
+                    elseif ($upgradeLevel === 'upgrade_2' && $moduleInfo['status'] === 'safe_mode') {
+                        $response[] = '<span class="alert">-> Changement d\'état annulé: Le module doit d\'abord passé en <span class="highlight">REBOOTING</span></span>';
+                    }
+                    else {
+                        $response[] = '<span class="alert">-> Changement d\'état annulé: Le système a rencontré une erreur inattendue</span>';
+                    }
+                    
+                    $response[] = '<span class="lowlight">Synchronisation du sous-système en cours...</span>';
+
+                    if ($newState !== null) {
+                        $statusData[$moduleKey]['status'] = $newState;
+                        file_put_contents($statusPath, json_encode($statusData, JSON_PRETTY_PRINT));
+                    }
+
+                    return join('<br>', $response);
+                }
+            }
+        }
+    }
+    return '<span class="alert">[ ACCÈS REFUSÉ ] Clé d\'authentification "' . $keyToTest . '" non reconnue par le système.<br>Vérifiez la clé d\'authentification et/ou le préfixe du module.</span>';
+}
+
+// -----------------------------//
+// ------------ TXT ------------//
+// -----------------------------//
+
+function txt(string $command = '') {
+    $baseDir = $_SERVER['DOCUMENT_ROOT'] . '/src/texts/';
+    if (!is_dir($baseDir)) {
+        mkdir($baseDir, 0777, true);
+    }
+
+    $args = preg_split('/\s+/', trim($command), 2);
+    $action = strtolower($args[0]);
+    $rest = isset($args[1]) ? $args[1] : '';
+
+    // Action LIST
+    if ($action === 'list') {
+        $files = array_diff(scandir($baseDir), array('..', '.'));
+        
+        if (empty($files)) {
+            return '<span class="lowlight">Aucun fichier texte trouvé dans la base de données locale.</span>';
+        }
+
+        // On nettoie l'affichage en retirant l'extension .txt de chaque fichier
+        $cleanFiles = array_map(function($file) {
+            return pathinfo($file, PATHINFO_FILENAME);
+        }, $files);
+
+        return '<span class="highlight">Index des fichiers locaux :</span><br> - ' . implode('<br> - ', $cleanFiles);
+    }
+
+    $fileArgs = preg_split('/\s+/', trim($rest), 2);
+    $rawFilename = $fileArgs[0];
+    $contentToAdd = isset($fileArgs[1]) ? $fileArgs[1] : '';
+
+    if (empty($rawFilename)) {
+        return '<span class="alert">Erreur de syntaxe. Nom de fichier manquant.</span>';
+    }
+
+    $safeFilename = preg_replace('/[^a-zA-Z0-9_-]/', '', $rawFilename);
+    if (empty($safeFilename)) {
+        return '<span class="alert">Erreur : Nom de fichier invalide.</span>';
+    }
+    $filename = $safeFilename . '.txt';
+    $filepath = $baseDir . $filename;
+
+    switch ($action) {
+        case 'create':
+            if (file_exists($filepath)) {
+                return '<span class="alert">Erreur : Le fichier ' . $safeFilename . ' existe déjà.</span>';
+            }
+            file_put_contents($filepath, "");
+            return 'Secteur alloué. Fichier <span class="highlight">' . $safeFilename . '</span> créé.';
+
+        case 'look':
+            if (!file_exists($filepath)) {
+                return '<span class="alert">Erreur 404 : Fichier ' . $safeFilename . ' introuvable.</span>';
+            }
+            $fileContent = file_get_contents($filepath);
+            // 1. htmlspecialchars sécurise le texte brut
+            // 2. nl2br convertit les vrais sauts de ligne du fichier en balises <br>
+            return '<span class="highlight">--- ' . $safeFilename . ' ---</span><br>' . ($fileContent ? nl2br(htmlspecialchars($fileContent)) : '<span class="lowlight">[ Fichier vide ]</span>');
+
+        case 'addto':
+            if (!file_exists($filepath)) {
+                return '<span class="alert">Erreur : Fichier ' . $safeFilename . ' introuvable.</span>';
+            }
+            if (empty($contentToAdd)) {
+                return '<span class="alert">Erreur : Aucun contenu spécifié.</span>';
+            }
+            // On ajoute le texte brut suivi d'un vrai saut de ligne (PHP_EOL)
+            file_put_contents($filepath, $contentToAdd . PHP_EOL, FILE_APPEND);
+            return 'Données annexées avec succès au registre <span class="highlight">' . $safeFilename . '</span>.';
+
+        case 'clear':
+            if (!file_exists($filepath)) {
+                return '<span class="alert">Erreur : Fichier ' . $safeFilename . ' introuvable.</span>';
+            }
+            file_put_contents($filepath, "");
+            return 'Contenu du fichier <span class="highlight">' . $safeFilename . '</span> purgé.';
+
+        case 'remove':
+            if (!file_exists($filepath)) {
+                return '<span class="alert">Erreur : Fichier ' . $safeFilename . ' introuvable.</span>';
+            }
+            unlink($filepath);
+            return 'Fichier <span class="highlight">' . $safeFilename . '</span> désintégré.';
+
+        default:
+            return '<span class="alert">Paramètre inconnu. Syntaxe : TXT create|list|look|addto|clear|remove [fichier]</span>';
+    }
 }

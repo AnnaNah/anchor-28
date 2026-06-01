@@ -5,19 +5,23 @@
         "content": {
             "r_motors": {
                 "name": "r_motors",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "RMTR"
             },
             "l_motors": {
                 "name": "l_motors",
-                "status": "damaged"
+                "status": "damaged",
+                "shortcode": "LMTR"
             },
             "hyperdrive_boosters": {
                 "name": "hyperdrive_boosters",
-                "status": "crit_damaged"
+                "status": "crit_damaged",
+                "shortcode": "HBTR"
             },
             "takeoff_propulsors": {
                 "name": "takeoff_propulsors",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "UPPR"
             }
         }
     },
@@ -27,27 +31,33 @@
         "content": {
             "hyperdrive": {
                 "name": "hyperdrive",
-                "status": "crit_damaged"
+                "status": "crit_damaged",
+                "shortcode": "MHDV"
             },
             "navigation_ia": {
                 "name": "navigation_ia",
-                "status": "offline"
+                "status": "offline",
+                "shortcode": "MNAV"
             },
             "env_variables": {
                 "name": "env_variables",
-                "status": "connected"
+                "status": "connected",
+                "shortcode": "MENV"
             },
             "auto_routing": {
                 "name": "auto_routing",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "MART"
             },
             "autopilot": {
                 "name": "autopilot",
-                "status": "damaged"
+                "status": "damaged",
+                "shortcode": "MAPT"
             },
             "plankoscopic_link_antena": {
                 "name": "plankoscopic_link_antena",
-                "status": "connected"
+                "status": "connected",
+                "shortcode": "MPLA"
             }
         }
     },
@@ -57,35 +67,43 @@
         "content": {
             "canteen": {
                 "name": "canteen",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "CTEN"
             },
             "cargo_bay": {
                 "name": "cargo_bay",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "CBAY"
             },
             "vehicule_bay": {
                 "name": "vehicule_bay",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "VBAY"
             },
             "dormitories": {
                 "name": "dormitories",
-                "status": "crit_damaged"
+                "status": "crit_damaged",
+                "shortcode": "DORM"
             },
             "engine_room": {
                 "name": "engine_room",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "ENGR"
             },
             "core_room": {
                 "name": "core_room",
-                "status": "crit_damaged"
+                "status": "crit_damaged",
+                "shortcode": "CORM"
             },
             "maintenance_room": {
                 "name": "maintenance_room",
-                "status": "crit_damaged"
+                "status": "crit_damaged",
+                "shortcode": "MTNC"
             },
             "cockpit": {
                 "name": "cockpit",
-                "status": "disconnected"
+                "status": "disconnected",
+                "shortcode": "CKPT"
             }
         }
     }

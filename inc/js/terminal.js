@@ -19,6 +19,20 @@ function sd() {
     obj.container.scrollTop = obj.containerChild.getBoundingClientRect().height;
 }
 
+function htmlspecialchars(str) {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, function(tag) {
+        const charsToReplace = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        };
+        return charsToReplace[tag] || tag;
+    });
+}
+
 async function sendCommand(command) {
     try {
         const response = await fetch('/inc/php/terminal.php', {
@@ -46,9 +60,12 @@ async function sendCommand(command) {
 }
 
 // CORRECTION 1 : Utilisation de document.createElement
-function appendMessage(text, options = {}) {
+function appendMessage(text, containHTML = true, options = {}) {
     const el = document.createElement('p');
-    el.innerHTML = text;
+    
+    if (containHTML) el.innerHTML = text;
+    else el.innerText = text;
+
     if (options.classes) {
         options.classes.forEach(className => {
             el.classList.add(className);
@@ -67,7 +84,7 @@ obj.form.addEventListener('submit', async (e) => {
     const response = await sendCommand(command);
 
     // On affiche la ligne de commande tapée par l'utilisateur
-    appendMessage(`<span class="lowlight">${obj.location.innerText + command}</span>`);
+    appendMessage(`<span class="lowlight">${obj.location.innerText + htmlspecialchars(command)}</span>`);
 
     addCommandToMemoryStack(command);
 

@@ -2,7 +2,7 @@
 
 $template = '';
 
-function gotoError() { header('Location: /?module=404'); exit(); }
+function gotoError() { header('Location: /404'); exit(); }
 
 if (!isset($_GET['module'])) gotoError();
 
