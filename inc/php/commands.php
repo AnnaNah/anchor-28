@@ -12,20 +12,31 @@ function help(string $command = '') {
         $respTemplate = [];
         
         foreach ($commands as $key => $value) {
-            // On vérifie que la commande est déverrouillée ET qu'elle est listable
-            $isUnlocked = isset($value['unlocked']) ? $value['unlocked'] : true;
-            if (isset($value['help_list']) && $value['help_list'] && $isUnlocked) {
-                $ligne = str_pad(strtoupper($value['name']), 15) . $value['description'];
-                $respTemplate[] = $ligne;
+            if (isset($value['help_list']) && $value['help_list']) {
+                $isUnlocked = isset($value['unlocked']) ? $value['unlocked'] : true;
+                $ligneNom = str_pad(strtoupper($value['name']), 15);
+                
+                if ($isUnlocked) {
+                    $respTemplate[] = $ligneNom . $value['description'];
+                } else {
+                    // La commande est affichée, mais grisée avec un avertissement
+                    $respTemplate[] = '<span class="lowlight">' . $ligneNom . '[ INACTIVE ]</span>';
+                }
             }
         }
         return join('<br>', $respTemplate);
     } else {
         $commandTarget = strtolower($command);
-        $isUnlocked = isset($commands[$commandTarget]['unlocked']) ? $commands[$commandTarget]['unlocked'] : true;
         
-        if (isset($commands[$commandTarget]) && isset($commands[$commandTarget]['help_list']) && $commands[$commandTarget]['help_list'] && $isUnlocked) {
-            return '<span class="mb-2">' . $commands[$commandTarget]['description'] . '</span><br>' . $commands[$commandTarget]['specified'];
+        if (isset($commands[$commandTarget]) && isset($commands[$commandTarget]['help_list']) && $commands[$commandTarget]['help_list']) {
+            $isUnlocked = isset($commands[$commandTarget]['unlocked']) ? $commands[$commandTarget]['unlocked'] : true;
+            
+            if ($isUnlocked) {
+                return '<span class="mb-2">' . $commands[$commandTarget]['description'] . '</span><br>' . $commands[$commandTarget]['specified'];
+            } else {
+                // Message d'erreur roleplay si le joueur demande l'aide d'une commande bloquée
+                return ['<span class="alert">ACCÈS REFUSÉ : La documentation de la commande ' . strtoupper($commandTarget) . ' est actuellement hors ligne.</span>'];
+            }
         } else {
             return ['<span class="alert">Aucune aide disponible pour la commande : ' . $command . '</span>'];
         }
@@ -45,18 +56,28 @@ function superhelp(string $command = '') {
         
         foreach ($commands as $key => $value) {
             $isUnlocked = isset($value['unlocked']) ? $value['unlocked'] : true;
+            $ligneNom = str_pad(strtoupper($value['name']), 15);
+            
             if ($isUnlocked) {
-                $ligne = str_pad(strtoupper($value['name']), 15) . $value['description'];
-                $respTemplate[] = $ligne;
+                $respTemplate[] = $ligneNom . $value['description'];
+            } else {
+                // Même logique pour le superhelp, avec un tag un peu plus sécuritaire
+                $respTemplate[] = '<span class="lowlight">' . $ligneNom . $value['description'] . ' [ ACCÈS RESTREINT ]</span>';
             }
         }
         return join('<br>', $respTemplate);
     } else {
         $commandTarget = strtolower($command);
-        $isUnlocked = isset($commands[$commandTarget]['unlocked']) ? $commands[$commandTarget]['unlocked'] : true;
         
-        if (isset($commands[$commandTarget]) && $isUnlocked) {
-            return '<span class="mb-2">' . $commands[$commandTarget]['description'] . '</span><br>' . $commands[$commandTarget]['specified'];
+        if (isset($commands[$commandTarget])) {
+            $isUnlocked = isset($commands[$commandTarget]['unlocked']) ? $commands[$commandTarget]['unlocked'] : true;
+            
+            if ($isUnlocked) {
+                return '<span class="mb-2">' . $commands[$commandTarget]['description'] . '</span><br>' . $commands[$commandTarget]['specified'];
+            } else {
+                // Message d'erreur roleplay pour superhelp
+                return ['<span class="alert">ACCÈS RESTREINT : La commande ' . strtoupper($commandTarget) . ' nécessite une élévation des privilèges.</span>'];
+            }
         } else {
             return ['<span class="alert">Aucune aide disponible pour la commande : ' . $command . '</span>'];
         }
