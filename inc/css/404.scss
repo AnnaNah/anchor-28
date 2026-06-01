@@ -1,1 +1,134 @@
 @use '../scss/common';
+
+// --- LE FOND DE LA PIÈCE ---
+body {
+    background-color: #2b2e33;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.45) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px;
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.85);
+    
+    color: #fff;
+    font-family: 'Fira Code', monospace;
+    height: 100dvh;
+}
+
+// Pour centrer le tout si tes utilitaires d-flex ne s'appliquent pas au parent
+.error-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+// --- L'ÉCRAN D'ERREUR ---
+.crt-screen-error {
+    background-color: #0b0505; // Un noir teinté de rouge très sombre
+    border: 4px solid #1a1a1a;
+    border-radius: 8px;
+    padding: clamp(2rem, 5vw, 4rem);
+    
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+    
+    // Le halo rouge d'alerte autour de l'écran
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.8),
+        inset 0 0 40px rgba(255, 0, 43, 0.15); 
+        
+    // Les Scanlines (lignes de vieux moniteur)
+    &::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        pointer-events: none;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+        background-size: 100% 4px; 
+    }
+}
+
+// --- LE TEXTE 404 GLITCHÉ ---
+.glitch-text {
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 900;
+    color: #ff002b; // Ton rouge néon
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(255, 0, 43, 0.6);
+    
+    // Petit spasme mécanique aléatoire
+    animation: glitch-skew 4s infinite linear alternate-reverse;
+}
+
+.error-msg {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    
+    .alert {
+        color: #ff002b;
+        font-weight: bold;
+        text-shadow: 0 0 8px rgba(255, 0, 43, 0.4);
+    }
+}
+
+// --- LA LIGNE DE COMMANDE ---
+.terminal-prompt {
+    margin-top: 2.5rem;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    color: #73797c; 
+    
+    .typewriter {
+        color: #fff;
+        border-right: 8px solid #fff; // Le curseur
+        padding-right: 4px;
+        animation: blink-cursor 0.75s step-end infinite;
+    }
+}
+
+// --- LE BOUTON DE RETOUR ---
+.btn-reboot {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 1rem 2rem;
+    
+    background-color: #111;
+    color: #39ff14; // Vert terminal pour indiquer la voie de secours
+    text-decoration: none;
+    border: 2px solid #1b5e25;
+    
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    
+    // Pour qu'il soit cliquable au-dessus des scanlines
+    position: relative; 
+    z-index: 20;
+
+    &:hover {
+        background-color: #39ff14;
+        color: #000;
+        box-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
+    }
+}
+
+// --- ANIMATIONS ---
+@keyframes blink-cursor {
+    from, to { border-color: transparent }
+    50% { border-color: #fff; }
+}
+
+@keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    90% { transform: skew(0deg); }
+    91% { transform: skew(5deg); }
+    92% { transform: skew(-5deg); }
+    93% { transform: skew(0deg); }
+    100% { transform: skew(0deg); }
+}
