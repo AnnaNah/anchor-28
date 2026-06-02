@@ -7,15 +7,17 @@
             "Diagnostic    : Le noyau système est verrouillé par un protocole de sécurité.",
             "Aide          : Élevez vos privilèges d'accès pour débrider le terminal.",
             "Commande      : GETLVL [clé_sécurité]",
-            "Indice        : Une clé d'accréditation est mentionnée dans les LOGBOOK."
+            "Indice        : Une clé d'accréditation est mentionnée dans les LOGBOOK.",
+            "--------------------------------------------------"
         ],
-        "restricted": [
+        "rebooting": [
             "<span class=\"highlight\">MANUEL : TERMINAL DE L'ANCRE</span>",
             "--------------------------------------------------",
             "Statut actuel : RESTRICTED (Accès partiel).",
             "Diagnostic    : Privilèges de niveau 2 accordés. Noyau semi-actif.",
             "Aide          : Le terminal attend la synchronisation des autres modules.",
-            "Action        : Allez réparer le GENERATOR et le STABILIZER."
+            "Action        : Allez réparer le GENERATOR et le STABILIZER.",
+            "--------------------------------------------------"
         ]
     },
     "stabilizer": {
@@ -25,15 +27,17 @@
             "Statut actuel : SAFE_MODE (Régulation passive).",
             "Diagnostic    : Les capteurs d'assiette magnétique sont désalignés.",
             "Aide          : Réalignez la télémétrie pour stabiliser la carcasse du vaisseau.",
-            "Commande      : REDIRECT FLUX_NORD STAB_CORE"
+            "Commande      : REDIRECT FLUX_NORD STAB_CORE",
+            "--------------------------------------------------"
         ],
-        "restricted": [
+        "rebooting": [
             "<span class=\"highlight\">MANUEL : STABILISATEUR GYROSCOPIQUE</span>",
             "--------------------------------------------------",
             "Statut actuel : RESTRICTED (Asservissement manuel actif).",
             "Diagnostic    : Les gyroscopes oscillent mais manquent de puissance brute.",
             "Aide          : Le stabilisateur a besoin d'un apport énergétique majeur.",
-            "Action        : Reroutez l'énergie depuis le GENERATOR ou le MANUAL_REROUTER."
+            "Action        : Reroutez l'énergie depuis le GENERATOR ou le MANUAL_REROUTER.",
+            "--------------------------------------------------"
         ]
     },
     "manual_rerouter": {
@@ -43,33 +47,78 @@
             "Statut actuel : SAFE_MODE (Routage automatique bloqué).",
             "Diagnostic    : Les connexions physiques vers l'antenne externe sont coupées.",
             "Aide          : Utilisez les commandes réseau pour forcer la redirection du signal.",
-            "Commande      : REDIRECT [source] [destination]"
+            "Commande      : REDIRECT [source] [destination]",
+            "--------------------------------------------------"
         ],
-        "restricted": [
+        "rebooting": [
             "<span class=\"highlight\">MANUEL : ROUTEUR DE FLUX MANUEL</span>",
             "--------------------------------------------------",
             "Statut actuel : RESTRICTED (Ponts de données instables).",
             "Diagnostic    : Le signal est redirigé mais le pare-feu du sous-système bloque le flux.",
             "Aide          : Injectez un script de contournement ou validez les ports ouverts.",
-            "Action        : Utilisez une clé d'accès réseau via la commande GETLVL."
+            "Action        : Utilisez une clé d'accès réseau via la commande GETLVL.",
+            "--------------------------------------------------"
         ]
     },
     "generator": {
         "safe_mode": [
-            "<span class=\"highlight\">MANUEL : GÉNÉRATEUR PRINCIPAL</span>",
+            "<span class=\"highlight\">MANUEL : GÉNÉRATEUR AUXILIAIRE (safe_mode)</span>",
             "--------------------------------------------------",
-            "Statut actuel : SAFE_MODE (Énergie de secours uniquement).",
-            "Diagnostic    : La bobine thermique est fracturée suite au crash.",
-            "Aide          : Fusionnez les composants nécessaires pour réparer le noyau.",
-            "Commande      : COMBINE [composant_1] [composant_2]"
+            "Vous devez commencer par redémarrer le générateur",
+            "avant toute autre intervention.",
+            "--------------------------------------------------"
         ],
-        "restricted": [
-            "<span class=\"highlight\">MANUEL : GÉNÉRATEUR PRINCIPAL</span>",
+        "rebooting": [
+            "<span class=\"highlight\">MANUEL : GÉNÉRATEUR AUXILIAIRE (rebooting)</span>",
             "--------------------------------------------------",
-            "Statut actuel : RESTRICTED (En attente de charge).",
-            "Diagnostic    : La bobine est réparée. Flux thermique stable.",
-            "Aide          : Le routeur manuel doit injecter le courant vers le réseau global.",
-            "Action        : Utilisez la commande REDIRECT depuis le MANUAL_REROUTER."
+            "Afin de guider l'opérateur en charge du générateur auxilière,",
+            "regroupez les informations et comparez afin de déterminer",
+            "l'opérateur adéquoit dans fonction des règles ci-dessous",
+            "en respectant l'ordre des conditions.",
+            "--------------------------------------------------",
+            "<span class=\"highlight\">S'il y a un 5 :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a exactement deux soustractions, x = (10 - le plus petit chiffre)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon s'il y a une addition et une division, x = 15",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 5",
+            "<span class=\"highlight\">Sinon s'il n'y a que des chiffres pairs (hors x) :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a une division, x = (le plus grand chiffre / 2)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon s'il y a au moins deux additions, x = 42",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 2",
+            "<span class=\"highlight\">Sinon s'il y a à la fois une division et une soustraction :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Si le premier chiffre de la formule est pair, x = 6",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon si la somme des chiffres est un multiple de 3, x = (la somme des chiffres / 3)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 12",
+            "<span class=\"highlight\">Sinon si la somme des chiffres est exactement égale à 13 :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il n'y a aucune addition, x = 13",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon s'il y a un 7, x = (7 * 2)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 3",
+            "<span class=\"highlight\">Sinon s'il y a un 0 :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a une multiplication, x = 1",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon si la somme des autres chiffres est impaire, x = (la somme des chiffres * 3)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 9",
+            "<span class=\"highlight\">Sinon s'il y a 3 chiffres identiques (hors x) :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a une multiplication, x = (le chiffre identique + 10)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon s'il y a une addition, x = (le chiffre identique * 3)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 0",
+            "<span class=\"highlight\">Sinon s'il n'y a ni addition ni soustraction (uniquement * et /) :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Si un des chiffres est strictement supérieur à 10, x = 5",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon si la somme des chiffres est paire, x = 8",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 11",
+            "<span class=\"highlight\">Sinon s'il y a un 7 et un 2 :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a deux additions, x = (7 + 2)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a au moins une soustraction, x = (7 - 2)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 14",
+            "<span class=\"highlight\">Sinon si la somme des chiffres est &lt; 6 :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;S'il y a deux multiplications, x = 100",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon s'il y a un 1, x = (le plus grand chiffre * 4)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 0",
+            "<span class=\"highlight\">Sinon si tous les opérateurs sont identiques (ex: 3 additions) :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Si l'opérateur est une addition, x = (la somme des chiffres - 5)",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon si l'opérateur est une multiplication, x = 2",
+            "&nbsp;&nbsp;&nbsp;&nbsp;Sinon, x = 1",
+            "<span class=\"highlight\">Sinon si aucune autre règle ne s'applique :</span>",
+            "&nbsp;&nbsp;&nbsp;&nbsp;x = 10",
+            "--------------------------------------------------"
         ]
     }
 }

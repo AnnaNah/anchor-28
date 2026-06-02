@@ -32,7 +32,7 @@
     "generator": {
         "has_hierarchy": false,
         "name": "generator",
-        "status": "safe_mode",
+        "status": "rebooting",
         "shortcode": "GNTR",
         "code": {
             "upgrade_1": "E3R-5G8J",

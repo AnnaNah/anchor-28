@@ -5,7 +5,7 @@
         "commandName": "help",
         "help_list": true,
         "description": "Affiche la liste des commandes système standard disponibles.",
-        "specified": "HELP [commande]<br>Fournit des informations d'aide détaillées sur une commande spécifiée.<br><br>Exemple : HELP open"
+        "specified": "HELP [commande]<br>Fournit des informations d'aide détaillées sur une commande spécifiée.<br><br>Exemple : HELP txt"
     },
 
     "superhelp": {
@@ -18,7 +18,7 @@
     },
 
     "rootmod": {
-        "unlocked": false,
+        "unlocked": true,
         "name": "rootmod",
         "commandName": "rootmod",
         "help_list": true,
@@ -54,7 +54,7 @@
     },
 
     "manual": {
-        "unlocked": false,
+        "unlocked": true,
         "name": "manual",
         "commandName": "manual",
         "help_list": true,
