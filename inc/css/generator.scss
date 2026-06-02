@@ -16,6 +16,20 @@ body {
     min-height: 100svh; // Sécurité : prend la taille de l'écran SANS la barre
 }
 
+// --- LE FOND DE LA PIÈCE ---
+body {
+    background-color: #2b2e33;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.45) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px;
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.85);
+    
+    // color: #fff;
+    // font-family: 'Fira Code', monospace;
+    // height: 100dvh;
+}
+
 .container {
     background-color: #7a7a7a; // Métal industriel
     padding: 2rem;
