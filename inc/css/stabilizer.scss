@@ -41,6 +41,8 @@ body.d-flex {
     width: 100%;
     max-width: min(95vw, 95dvh); 
     aspect-ratio: 1 / 1;
+
+    border-radius: .5rem;
     
     padding: var(--stabilizer-size);
     box-shadow: 0 0 var(--stabilizer-size) #000a;
