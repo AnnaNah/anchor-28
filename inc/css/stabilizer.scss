@@ -159,6 +159,7 @@ body.d-flex {
     display: flex;
     align-items: center;
     background-color: #151816; 
+    color: #fff;
     
     // CORRECTION 1 : Bordure en pixels fixes. 
     // Comme ça, elle ne grossira jamais au point d'écraser le texte
@@ -169,7 +170,7 @@ body.d-flex {
     width: clamp(150px, 40%, 300px); 
     
     height: var(--stabilizer-size);
-    text-transform: uppercase;
+    // text-transform: uppercase;
     z-index: 999;
     position: absolute;
     top: 0; left: 50%; transform: translateX(-50%);
